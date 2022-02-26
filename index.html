@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balanço</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="http://fonts.cdnfonts.com/css/lovelo?styles=25962" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/glacial-indifference" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="jquery-3.6.0.min.js">
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="inicio()" ontouchstart="startBackup(this)" onmousedown="startBackup(this)" ontouchend="endBackup()" onmouseup="endBackup()">
+    <div id="opcoes">
+        <ul id="simbolos">
+            <li><i class="fa-solid fa-pen-to-square" id="itemEsq" onclick="editar()"></i></li>
+            <li><i class="fa-solid fa-trash" onclick="deletar()" id="itemDir"></i></li>
+        </ul>
+    </div>
+    <div id="menumes" class="sumir">
+        <div class="sub">
+            <i class="fa-solid fa-circle-arrow-left flecha pos" onclick="recuaMes()"></i>
+            <span id="mesAno" class="pos">z</span>
+            <i class="fa-solid fa-circle-arrow-right flecha pos" onclick="avancaMes()"></i>
+        </div>
+    </div>
+    <div id="restoTela">
+        <div id="items">
+            <div id="esquerda" class="item">
+                <div id="contas">
+                </div>
+                <div id="mais" onclick="openB()">
+                    <p class="mais">+</p>
+                </div>
+            </div>
+            <div id="direita" class="item" style="background-color: red;">
+                <div id="calculo">
+                    <div id="divSalario"><label for="salario" id="labelSalario" max-lenght="5">Salário: R$ </label><input type="text" name="salario" id="salario" onfocus="salario()"></div>
+                    <table>
+                        <tr>
+                            <td class="esq">Total: </td>
+                            <td class="dir" id="total">R$ 1000,00</td>
+                        </tr>
+                        <tr>
+                            <td class="esq">Total já pago: </td>
+                            <td class="dir" id="pago">R$ 1000,00</td>
+                        </tr>
+                        <tr>
+                            <td class="esq">Total a se pagar: </td>
+                            <td class="dir" id="pagar">R$ 1000,00</td>
+                        </tr>
+                        <tr>
+                            <td class="esq">Poder de Gasto: </td>
+                            <td class="dir" id="poder">R$ 1000,00</td>
+                        </tr>
+                        <tr id="backupTR" style="display: none; opacity: 0;">
+                            <td class="esq">Backup: </td>
+                            <td class="dir" id="backup"><input type="text" id="InputBackup"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script src="script.js"></script>
+</body>
+
+</html>

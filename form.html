@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+    <script src="https://plentz.github.io/jquery-maskmoney/javascripts/jquery.maskMoney.min.js"
+        type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/glacial-indifference" type="text/css" />
+    <style>
+        .close {
+            font-size: 4vh;
+            z-index: 999;
+            float: right;
+            padding: 1vh 1vh 0 0;
+            color: #154854
+        }
+
+        .form {
+            padding-top: 10vh;
+            margin-left: auto;
+            margin-right: auto;
+            width: 80vw;
+            height: 100vh;
+
+        }
+
+        .form input,
+        .form select,
+        .form input:focus,
+        .form select:focus,
+        .form input::after,
+        .form select::after,
+        #buttonD {
+            width: 100%;
+            height: 7.4vh;
+            margin-bottom: 4vh;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(221, 220, 220);
+            text-indent: 2vw;
+            font-size: 90%;
+            font-family: 'GlacialIndifferenceRegular';
+            position: relative;
+            box-shadow: 0 0 0 0;
+            outline: 0;
+            color: gray;
+        }
+
+        .form select {
+            margin-top: 1vh;
+        }
+
+        .form label {
+            font-family: 'GlacialIndifferenceRegular';
+        }
+
+        #button,
+        #buttonD {
+            width: 102%;
+            background-color: #154854;
+            color: white;
+            font-size: 2vh;
+            font-weight: bold;
+        }
+
+        #buttonD {
+            background-color: rgb(190, 190, 190);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="dadosb">
+        <i class="fa-solid fa-circle-xmark close" onclick="closeB()"></i>
+        <div id="dados" class="form">
+            <form action="index.html" method="get">
+                <label for="tipo">Qual o tipo você deseja adicionar?</label><br>
+                <select name="tipo" id="tipo" v-model="tipo">
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="conta">Conta</option>
+                    <option value="parcela">Parcela</option>
+                </select><br>
+
+                <input type="text" name="descricao" id="descr" placeholder="Digite uma descrição" v-model="desc"
+                    autocomplete="off" maxlength="20"><br>
+                <input type="text" name="valor" id="valor" placeholder="Digite o valor" v-model="valor"
+                    autocomplete="off">
+                <input type="number" name="parcelas" id="parcelas" placeholder="Digite o número de parcelas"
+                    v-if="tipo == 'parcela'" v-model="parcelas" autocomplete="off">
+                <input type="submit" value="Continuar" id="button"
+                    v-if="(parcelas != '' || tipo == 'conta') && desc !='' && tipo != '' && valor != '' "
+                    onclick="decode()">
+                <button id="buttonD" v-else>Continuar</button>
+                <input type="text" name="concluido" style="display: none;" id="concluido">
+                <input type="text" name="idElemento" style="display: none;" id="idElemento">
+            </form>
+        </div>
+    </div>
+    <script>
+        $('#valor').mask('#.##0,00', { reverse: true });
+    </script>
+    <script>
+        var edit = false
+        getValues()
+        setInterval(teste, 100)
+        function teste() {
+            tipo = document.querySelector('#tipo').value
+            valor = document.querySelector('#valor').value
+            parcelas = document.querySelector('#parcelas').value
+            descr = document.querySelector('#descr').value
+            test = (parcelas != '' || tipo == 'conta')
+            if (tipo == 'parcela') {
+                document.querySelector('#parcelas').style.display = 'block'
+            } else {
+                document.querySelector('#parcelas').style.display = 'none'
+            }
+            if (tipo != '' && valor != '' && descr != '' && test) {
+                document.querySelector('#button').style.display = 'block'
+                document.querySelector('#buttonD').style.display = 'none'
+            } else {
+                document.querySelector('#button').style.display = 'none'
+                document.querySelector('#buttonD').style.display = 'block'
+            }
+        }
+        function decode() {
+            if (result.get('id') != undefined){
+                value = document.querySelector('#valor').value
+                document.querySelector('#valor').value = value.replace('R$ ', '').replace('.', '').replace(',', '.')
+            }
+        }
+        function getValues() {
+            result = new Map()
+            get = window.location.href.split('?')[1]
+            
+            if (get != undefined) {
+                for (let e of get.split('&')) {
+                    aray = e.split('=')
+                    key = aray[0]
+                    value = aray[1]
+                    result.set(key, value);
+                }
+                document.querySelector('#tipo').value = result.get('tipo')
+                document.querySelector('#descr').value = decodeURI(result.get('descricao')).replace('+', ' ')
+                document.querySelector('#valor').value = result.get('valor') 
+                if (result.get('parcelas') != undefined){
+                    document.querySelector('#parcelas').value = result.get('parcelas')
+                }
+                document.querySelector('#idElemento').value = result.get('id')
+                document.querySelector('#concluido').value = result.get('concluido')
+            }
+        }
+    </script>
+</body>
+
+</html>
