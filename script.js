@@ -12,6 +12,7 @@ var totalaPagar = 0
 var poderGasto = 0;
 contas = []
 var result;
+
 function inicio(){
     atualizaDados();
     upaStorage();
@@ -194,16 +195,19 @@ function puxaSalario(){
         document.querySelector('#salario').value = (parseFloat(localStorage.salario)).toFixed(2);
     }
 }
+function seila(){
+    vai = (parseFloat((document.querySelector('#salario').value).replace('.', '').replace(',', '.'))).toFixed(2)
+    document.querySelector('#salario').value = vai
+    localStorage.salario = vai
+    calcula()
+    document.querySelector('#salario').removeEventListener('focusout', seila)
+}
 function salario(){
     cont = 0
-    document.querySelector('#salario').addEventListener('focusout', function(){
-            vai = (parseFloat((document.querySelector('#salario').value).replace('.', '').replace(',', '.'))).toFixed(2)
-            document.querySelector('#salario').value = vai
-            localStorage.salario = vai
-            calcula()
-            cont++
-    })
+    document.querySelector('#salario').addEventListener('focusout', seila)
 }
+
+
 function calcula(){
     total = 0
     totalPago = 0
@@ -260,3 +264,9 @@ function backup(){
 
 
 
+document.querySelector('#salario').addEventListener('focus', function(){
+    vai = (document.querySelector('#salario').value).replace(',', '')
+    vai = vai.toString();
+    vai = vai.split('.')
+    document.querySelector('#salario').value = vai[0]
+})
