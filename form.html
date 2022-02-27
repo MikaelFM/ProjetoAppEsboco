@@ -99,6 +99,7 @@
                 <button id="buttonD" v-else>Continuar</button>
                 <input type="text" name="concluido" style="display: none;" id="concluido">
                 <input type="text" name="idElemento" style="display: none;" id="idElemento">
+                <input type="text" name="mes" style="display: none;" id="mes">
             </form>
         </div>
     </div>
@@ -137,7 +138,6 @@
         function getValues() {
             result = new Map()
             get = window.location.href.split('?')[1]
-            
             if (get != undefined) {
                 for (let e of get.split('&')) {
                     aray = e.split('=')
@@ -145,6 +145,8 @@
                     value = aray[1]
                     result.set(key, value);
                 }
+                document.querySelector('#mes').value = result.get('mes')
+                if(result.size > 1){
                 document.querySelector('#tipo').value = result.get('tipo')
                 document.querySelector('#descr').value = decodeURI(result.get('descricao')).replace('+', ' ')
                 document.querySelector('#valor').value = result.get('valor') 
@@ -153,6 +155,7 @@
                 }
                 document.querySelector('#idElemento').value = result.get('id')
                 document.querySelector('#concluido').value = result.get('concluido')
+            }
             }
         }
     </script>

@@ -55,6 +55,7 @@ function pegaValores(exist) {
     valor = result.get('valor')
     valor = parseFloat(valor)
     tipo = result.get('tipo')
+    mesAtual = result.get('mes')
     if(result.get('idElemento') != undefined){
         idElemento = result.get('idElemento')
     }
@@ -76,10 +77,12 @@ const recuaMes = function () {
     carregaRegistros()
 }
 function openB() {
-    window.location.href = './form.html'
+    window.location.href = './form.html?mes=' + mesAtual
 }
 function openO() {
+    if (idE != ''){
     document.getElementById(idE).style.backgroundColor = '#a3f8f1'
+    }
     document.getElementById('menumes').style.display = 'none'
     document.getElementById('opcoes').style.display = 'block'
     document.getElementById('restoTela').style.marginTop = '20vh'
@@ -185,7 +188,7 @@ function concluir(){
     carregaRegistros()
 }
 function editar(){
-    window.location.href = './form.html' + '?tipo=' + contas[mesAtual][idE].tipo + '&descricao=' + contas[mesAtual][idE].descricao + '&valor=' + contas[mesAtual][idE].valor + '&parcelas=' + contas[mesAtual][idE].parcelas + '&id=' + idE + '&concluido=' + contas[mesAtual][idE].concluido
+    window.location.href = './form.html' + '?tipo=' + contas[mesAtual][idE].tipo + '&descricao=' + contas[mesAtual][idE].descricao + '&valor=' + contas[mesAtual][idE].valor + '&parcelas=' + contas[mesAtual][idE].parcelas + '&id=' + idE + '&concluido=' + contas[mesAtual][idE].concluido + "&mes=" + mesAtual
 }
 function puxaSalario(){
     if (localStorage.salario == undefined){
